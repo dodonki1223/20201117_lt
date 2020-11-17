@@ -6,11 +6,11 @@ ARGV.each do |arg|
   user = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/users/' + arg))
   user = JSON.parse(user)
   user['subscribed_shop_ids'].each do |id|
-    b = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/shops/' + id.to_s))
+    shop = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/shops/' + id.to_s))
     if user['shops'] == nil
       user['shops'] = []
     end
-    user['shops'].push(JSON.parse(b))
+    user['shops'].push(JSON.parse(shop))
   end
   res << user
 end
