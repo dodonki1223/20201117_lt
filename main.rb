@@ -9,9 +9,7 @@ ARGV.each do |arg|
   user = JSON.parse(user)
   user['subscribed_shop_ids'].each do |id|
     shop = Net::HTTP.get(URI.parse("#{API_URL}/shops/#{id}"))
-    if user['shops'] == nil
-      user['shops'] = []
-    end
+    user['shops'] ||= []
     user['shops'].push(JSON.parse(shop))
   end
   res << user
