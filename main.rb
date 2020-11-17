@@ -6,9 +6,9 @@ API_URL = 'https://gasyuku-api.herokuapp.com/'.freeze
 res = []
 ARGV.each do |arg|  
   user = JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/users/#{arg}")))
+  user['shops'] = []
   user['subscribed_shop_ids'].each do |id|
     shop = JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/shops/#{id}")))
-    user['shops'] = []
     user['shops'].push(shop)
   end
   res << user
