@@ -3,16 +3,16 @@ require 'json'
 
 res = []
 ARGV.each do |arg|  
-  a = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/users/' + arg))
-  a = JSON.parse(a)
-  a['subscribed_shop_ids'].each do |id|
+  user = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/users/' + arg))
+  user = JSON.parse(user)
+  user['subscribed_shop_ids'].each do |id|
     b = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/shops/' + id.to_s))
-    if a['shops'] == nil
-      a['shops'] = []
+    if user['shops'] == nil
+      user['shops'] = []
     end
-    a['shops'].push(JSON.parse(b))
+    user['shops'].push(JSON.parse(b))
   end
-  res << a
+  res << user
 end
 puts JSON.dump(res)
 
