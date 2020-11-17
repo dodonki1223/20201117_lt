@@ -1,12 +1,14 @@
 require 'net/http'
 require 'json'
 
+API_URL = 'https://gasyuku-api.herokuapp.com/'.freeze
+
 res = []
 ARGV.each do |arg|  
-  user = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/users/' + arg))
+  user = Net::HTTP.get(URI.parse("#{API_URL}/users/#{arg}"))
   user = JSON.parse(user)
   user['subscribed_shop_ids'].each do |id|
-    shop = Net::HTTP.get(URI.parse('https://gasyuku-api.herokuapp.com/shops/' + id.to_s))
+    shop = Net::HTTP.get(URI.parse("#{API_URL}/shops/#{id}"))
     if user['shops'] == nil
       user['shops'] = []
     end
