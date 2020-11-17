@@ -4,9 +4,9 @@ require 'json'
 API_URL = 'https://gasyuku-api.herokuapp.com/'.freeze
 
 res = ARGV.map do |arg|
-  user = JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/users/#{arg}")))
-  user['shops'] = user['subscribed_shop_ids'].map do |id|
-    JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/shops/#{id}")))
+  user = JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/users/#{arg}")), symbolize_names: true)
+  user[:shops] = user[:subscribed_shop_ids].map do |id|
+    JSON.parse(Net::HTTP.get(URI.parse("#{API_URL}/shops/#{id}")), symbolize_names: true)
   end
   user
 end
